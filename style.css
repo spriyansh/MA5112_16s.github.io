@@ -1,0 +1,104 @@
+body{
+  background-color: #480032;
+  text-align: center;
+  margin: 0px
+}
+
+.base{
+  background-color: #005792;
+}
+
+#pageHeading{
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  margin: 0px auto 0px auto;
+  padding-top: 50px;
+  position: relative;
+  display: block;
+  font-size: 468.75%;
+  font-weight: normal;
+}
+
+#nf{
+  display: block;
+  position: relative;
+  height: 90px;
+  width: 450px;
+  margin: 0px auto 0px auto;
+  padding: 0px auto 0px auto;
+}
+
+#pageSubHeading{
+  margin: 0px auto 10px auto;
+  color: white;
+  font-family: 'Sacramento', cursive;
+  font-weight: normal;
+  font-size: 193.75%;
+}
+.introduction{
+  color: #d5ecc2;
+  text-align: left;
+  margin: 100px;
+  font-size: 153.75%;
+  line-height: 50px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.introduction h4{
+  color: #ffd3b4;
+  line-height: 0px;
+}
+
+.dada{
+  color: #d5ecc2;
+  text-align: left;
+  margin: auto 100px auto 100px;
+  font-size: 153.75%;
+  line-height: 50px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.dada h4{
+  color: #ffd3b4;
+  line-height: 0px;
+}
+
+#image1{
+  border-radius: 25px;
+  position: relative;
+  margin: 50px auto 20px auto;
+  width: 725px;
+  height: 400px;
+  right: 23px;
+}
+
+a:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: pink;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.qc-class{
+margin: 100px;
+}
+.OC{
+
+}
