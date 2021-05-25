@@ -23,13 +23,32 @@
       <h4><strong> Divisive Amplicon Denoising Algorithm (DADA)</strong></h4>
       <p>DADA2 is a method to infer the sample sequences in a collection of amplicon sequencing reads. DADA2 is a de novo method, and completely reference free. DADA2 does not create OTUs, it infers sample sequences exactly, resolving differences of as little as one nucleotide <a href="https://bioconductor.org/packages/devel/bioc/vignettes/dada2/inst/doc/dada2-intro.html">[2]</a>. DADA explicitly incorporates read abundance when deciding whether sequences are genuine or errors; if there are many identical reads of a sequence, DADA will be more likely to infer an underlying sample genotype, even if individually those reads would be consistent with being an error from a nearby genotype. Furthermore, DADA implicitly assumes, via the error model, that reads near highly abundant sequences are far more likely to be errors. In contrast, previous methods have typically treated each read independently. By using both sequence identity and abundance in this way, DADA is able to disentangle real diversity from errors at finer scales than previous methods, even when tuned to be very conservative <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-13-283">[3]</a>.</p>
       </div>
-      <div class="fastqcbase">
+      <hr>
+      <div class="channel-base">
+      <div class="channel">
+      <h4>Reading raw files</h4>
+      <p>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
+      </div>
+      <div class="channel-code">
+      <pre class="code"><code class="language-java">
+#!/usr/bin/env nextflow
 
+params.reads = "path_to_folder/*_R[1,2].fastq.gz"
+
+Channel
+  .fromFilePairs(params.reads)
+  .ifEmpty { error "Cannot find any reads matching: ${params.reads}" }
+  .into {reads_ch; dada2ReadPairs}
+}
+  </code></pre></div></div>
+
+      <div class="fastqcbase">
+<hr>
       <div class="fastqc">
+
         <h4>FastQC Process</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
       </div>
-      <hr>
       <div class="fastqc-code">
         <pre class="code"><code class="language-java">
 process FastQC {

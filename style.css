@@ -95,17 +95,50 @@ a:active {
   background-color: transparent;
   text-decoration: underline;
 }
+
+
+.channel{
+  position: absolute;
+  display: inline-block;
+  margin: 0px 100px 0px 0px;
+  left: 700px;
+  text-align: justify;
+  padding-left: 30px;
+  color: #d5ecc2;
+  font-size: 153.75%;
+  line-height: 50px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.channel h4{
+  color: #ffd3b4;
+  line-height: 0px;
+}
+
+.channel-code{
+  position: absolute;
+  text-align: justify;
+  display: block;
+  margin-left: 90px;
+  height: 250px;
+  width: 600px;
+  height: 450px;
+  padding-right: 30px;
+  padding-left: 10px;
+}
+
+
 .fastqcbase{
   text-align: left;
   position: relative;
-  margin-top: 50px;
-  margin-bottom: 0px;
+  margin-top: 350px;
 }
 .fastqc{
   position: absolute;
   display: inline-block;
   margin: 0px 0px 0px 100px;
   right: 700px;
+  padding-top: 50px;
   text-align: justify;
   padding-right: 30px;
   color: #d5ecc2;
@@ -134,13 +167,15 @@ a:active {
 .multiqcbase{
   text-align: left;
   position: relative;
-  margin-top: 550px;
+  top: 500px;
+  display: block;
 }
 .multiqc{
   position: absolute;
   display: inline-block;
   margin: 0px 100px 0px 0px;
   left: 700px;
+  padding-top: 75px;
   text-align: justify;
   padding-left: 30px;
   color: #d5ecc2;
@@ -188,6 +223,7 @@ hr {
   margin: 0px 0px 0px 110px;
   right: 700px;
   text-align: justify;
+  padding-top: 150px;
   padding-right: 50px;
   color: #d5ecc2;
   font-size: 153.75%;
@@ -219,6 +255,7 @@ hr {
 .derepbase{
   text-align: left;
   position: relative;
+  height: 750px;
   margin-top: 800px;
 }
 .derep{
@@ -229,6 +266,7 @@ hr {
   text-align: justify;
   padding-left: 40px;
   color: #d5ecc2;
+  padding-top: 200px;
   font-size: 153.75%;
   line-height: 50px;
   font-family: 'Montserrat', sans-serif;
@@ -254,8 +292,10 @@ hr {
 .errbase{
   text-align: left;
   position: relative;
-  margin-top: 800px;
+  margin-top: 0px;
   margin-bottom: 0px;
+  height: 850px;
+
 }
 .err{
   position: absolute;
@@ -263,6 +303,7 @@ hr {
   margin: 0px 0px 0px 110px;
   right: 700px;
   text-align: justify;
+  padding-top: 200px;
   padding-right: 50px;
   color: #d5ecc2;
   font-size: 153.75%;
@@ -294,7 +335,9 @@ hr {
 .dadabase{
   text-align: left;
   position: relative;
-  margin-top: 875px;
+  margin-top: 0px;
+  height: 920px;
+
 }
 .dada{
   position: absolute;
@@ -302,6 +345,7 @@ hr {
   margin: 0px 100px 0px 0px;
   left: 700px;
   text-align: justify;
+  padding-top: 200px;
   padding-left: 40px;
   color: #d5ecc2;
   font-size: 153.75%;
@@ -329,8 +373,10 @@ hr {
 .ASVbase{
   text-align: left;
   position: relative;
-  margin-top: 950px;
-  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 100px;
+  height: 830px;
+
 }
 .ASV{
   position: absolute;
@@ -338,6 +384,7 @@ hr {
   margin: 0px 0px 0px 110px;
   right: 700px;
   text-align: justify;
+  padding-top: 200px;
   padding-right: 50px;
   color: #d5ecc2;
   font-size: 153.75%;
@@ -390,7 +437,7 @@ hr {
   color: white;
   margin: 5px auto 5px auto;
   padding-top: 5px;
-  padding-bottom: 15px;
+  padding-bottom: 5px;
   display: block;
   font-size: 20px;
   font-weight: normal;
