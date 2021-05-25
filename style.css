@@ -97,6 +97,13 @@ a:active {
 }
 
 
+
+.channel-base{
+  text-align: left;
+  position: relative;
+  height: 260px;
+}
+
 .channel{
   position: absolute;
   display: inline-block;
@@ -127,11 +134,11 @@ a:active {
   padding-left: 10px;
 }
 
-
 .fastqcbase{
   text-align: left;
   position: relative;
-  margin-top: 350px;
+  height: 520px;
+
 }
 .fastqc{
   position: absolute;
@@ -167,8 +174,8 @@ a:active {
 .multiqcbase{
   text-align: left;
   position: relative;
-  top: 500px;
-  display: block;
+  height: 500px;
+
 }
 .multiqc{
   position: absolute;
@@ -214,8 +221,7 @@ hr {
 .trimbase{
   text-align: left;
   position: relative;
-  margin-top: 1100px;
-  margin-bottom: 0px;
+  height: 780px;
 }
 .trim{
   position: absolute;
@@ -256,7 +262,6 @@ hr {
   text-align: left;
   position: relative;
   height: 750px;
-  margin-top: 800px;
 }
 .derep{
   position: absolute;
@@ -292,8 +297,6 @@ hr {
 .errbase{
   text-align: left;
   position: relative;
-  margin-top: 0px;
-  margin-bottom: 0px;
   height: 850px;
 
 }
@@ -335,7 +338,6 @@ hr {
 .dadabase{
   text-align: left;
   position: relative;
-  margin-top: 0px;
   height: 920px;
 
 }
@@ -373,7 +375,6 @@ hr {
 .ASVbase{
   text-align: left;
   position: relative;
-  margin-top: 0px;
   margin-bottom: 100px;
   height: 830px;
 
