@@ -23,8 +23,15 @@
       <h4><strong> Divisive Amplicon Denoising Algorithm (DADA)</strong></h4>
       <p>DADA2 is a method to infer the sample sequences in a collection of amplicon sequencing reads. DADA2 is a de novo method, and completely reference free. DADA2 does not create OTUs, it infers sample sequences exactly, resolving differences of as little as one nucleotide <a href="https://bioconductor.org/packages/devel/bioc/vignettes/dada2/inst/doc/dada2-intro.html">[2]</a>. DADA explicitly incorporates read abundance when deciding whether sequences are genuine or errors; if there are many identical reads of a sequence, DADA will be more likely to infer an underlying sample genotype, even if individually those reads would be consistent with being an error from a nearby genotype. Furthermore, DADA implicitly assumes, via the error model, that reads near highly abundant sequences are far more likely to be errors. In contrast, previous methods have typically treated each read independently. By using both sequence identity and abundance in this way, DADA is able to disentangle real diversity from errors at finer scales than previous methods, even when tuned to be very conservative <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-13-283">[3]</a>.</p>
       </div>
-      <div class="qc-class">
-						<pre class="QC"><code class="language-java">
+      <div class="fastqcbase">
+
+      <div class="fastqc">
+        <h4>FastQC Process</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
+      </div>
+      <hr>
+      <div class="fastqc-code">
+        <pre class="code"><code class="language-java">
 process FastQC {
 
   publishDir "output/Process_1_fastqcBeforeTrim", mode: "link"
@@ -42,7 +49,16 @@ process FastQC {
   fastqc -q $reads
   """
 }
+</code></pre></div></div>
 
+<div class="multiqcbase">
+
+<div class="multiqc">
+  <h4>MultiQC Process</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
+</div>
+<div class="multiqc-code">
+  <pre class="code"><code class="language-java">
 process MultiQC {
 
   publishDir "output/Process_2_multiqcBeforeTrim", mode: "link"
@@ -61,7 +77,54 @@ process MultiQC {
   multiqc .
   """
 }
-</code></pre></div>
+</code></pre></div></div>
+
+<hr>
+
+<div class="trimbase">
+
+<div class="trim">
+  <h4>Filter and Trim Process</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
+</div>
+<hr>
+<div class="trim-code">
+  <pre class="code"><code class="language-java">
+    process filterAndTrim {
+
+    	publishDir "output/Process_3_FilterAndTrim", mode: "link"
+
+    	input:
+    	set pairId, file(reads) from dada2ReadPairs
+
+    	output:
+    	set val(pairId), "*_R1f.fastq.gz", "*_R2f.fastq.gz" into filteredReads /*Derep*/
+    	file "*_R1f.fastq.gz" into forReads /*Fastqc2*/
+    	file "*_R2f.fastq.gz" into revReads /*Fastqc2*/
+    	file "*.trimmed.txt" into trimTracking
+
+        script:
+        """
+        #!/usr/bin/env Rscript
+        library(dada2)
+
+
+        out <- filterAndTrim(fwd = "${reads[0]}", # Roots for forward reads
+        			filt = paste0("${pairId}", "_R1f.fastq.gz"),
+
+        			rev = "${reads[1]}", # Roots for reverse reads
+        			filt.rev = paste0("${pairId}", "_R2f.fastq.gz"),
+        	maxN = 0,
+        	maxEE = c(2,2),
+        	truncQ = 0, truncLen = 245,
+        	rm.phix=FALSE, multithread=TRUE,
+        	compress = T)
+
+        	write.csv(out, paste0("${pairId}", ".trimmed.txt"))
+        """
+    }
+</code></pre></div></div>
+
     <script src="prism.js"></script>
     </body>
     </html>
