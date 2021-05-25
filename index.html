@@ -16,7 +16,7 @@
       <img id="image1" src="microbes.jpg" alt="microbes"></div>
       <div class="introduction">
         <h4><strong>16S Metagenomic Sequencing</strong></h4>
-        <p>16S rRNA gene sequencing, or simply 16S sequencing, utilizes PCR to target and amplify portions of the hypervariable regions (V1-V9) of the bacterial 16S rRNA gene1. Amplicons from separate samples are then given molecular barcodes, pooled together, and sequenced. After sequencing, raw data is analyzed with a bioinformatics pipeline which includes trimming, error correction, and comparison to a 16S reference database. After the reads are assigned to a phylogenetic rank, a taxonomy profile can be generated. Similarly, ITS sequencing follows the same strategy but targeting the ITS (Internal transcribed spacer) region found in fungal genomes <a href="https://www.zymoresearch.com/blogs/blog/16s-sequencing-vs-shotgun-metagenomic-sequencing">[1]</a>.</p>
+        <p>16S rRNA gene sequencing, or simply 16S sequencing, utilizes PCR to target and amplify portions of the hypervariable regions (V1-V9) of the bacterial 16S rRNA gene. Amplicons from separate samples are then given molecular barcodes, pooled together, and sequenced. After sequencing, raw data is analyzed with a bioinformatics pipeline which includes trimming, error correction, and comparison to a 16S reference database. After the reads are assigned to a phylogenetic rank, a taxonomy profile can be generated. Similarly, ITS sequencing follows the same strategy but targeting the ITS (Internal transcribed spacer) region found in fungal genomes <a href="https://www.zymoresearch.com/blogs/blog/16s-sequencing-vs-shotgun-metagenomic-sequencing">[1]</a>.</p>
       </div>
       <div class="dada">
 
@@ -78,50 +78,81 @@ process MultiQC {
   """
 }
 </code></pre></div></div>
-
-<hr>
-
 <div class="trimbase">
-
+<hr>
 <div class="trim">
   <h4>Filter and Trim Process</h4>
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
 </div>
-<hr>
 <div class="trim-code">
-  <pre class="code"><code class="language-java">
-    process filterAndTrim {
+  <pre class="code"><code class="language-R">
+process filterAndTrim {
 
-    	publishDir "output/Process_3_FilterAndTrim", mode: "link"
+  publishDir "output/Process_3_FilterAndTrim", mode: "link"
+
+  input:
+  set pairId, file(reads) from dada2ReadPairs
+
+  output:
+  set val(pairId), "*_R1f.fastq.gz", "*_R2f.fastq.gz" into filteredReads
+  file "*_R1f.fastq.gz" into forReads
+  file "*_R2f.fastq.gz" into revReads
+  file "*.trimmed.txt" into trimTracking
+
+  script:
+  """
+  #!/usr/bin/env Rscript
+  library(dada2)
+
+  out <- filterAndTrim(fwd = "${reads[0]}",
+                  filt = paste0("${pairId}", "_R1f.fastq.gz"),
+                  rev = "${reads[1]}",
+                  filt.rev = paste0("${pairId}", "_R2f.fastq.gz"),
+                  maxN = 0, maxEE = c(2,2), truncQ = 0, truncLen = 245,
+                  rm.phix=FALSE, multithread=TRUE, compress = T)
+
+  write.csv(out, paste0("${pairId}", ".trimmed.txt"))
+  """
+}
+</code></pre></div></div>
+
+<div class="derepbase">
+  <hr>
+
+<div class="derep">
+  <h4>Dereplication Process</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
+</div>
+<div class="derep-code">
+  <pre class="code"><code class="language-R">
+    process Dereplication {
+
+    	publishDir "output/Process_6_dereplication", mode: "link"
+
+    	label "Dereplication"
 
     	input:
-    	set pairId, file(reads) from dada2ReadPairs
+    	set val(pairId), file(filtFor), file(filtRev) from filteredReads
 
     	output:
-    	set val(pairId), "*_R1f.fastq.gz", "*_R2f.fastq.gz" into filteredReads /*Derep*/
-    	file "*_R1f.fastq.gz" into forReads /*Fastqc2*/
-    	file "*_R2f.fastq.gz" into revReads /*Fastqc2*/
-    	file "*.trimmed.txt" into trimTracking
+    	file "derepf.RDS" into derepFor
+    	file "derepr.RDS" into derepRev
+    	file "derepf.RDS" into derepFordada
+    	file "derepr.RDS" into derepRevdada
 
-        script:
-        """
-        #!/usr/bin/env Rscript
-        library(dada2)
+    	script:
+    	"""
+    	#!/usr/bin/env Rscript
+    	library(dada2)
 
 
-        out <- filterAndTrim(fwd = "${reads[0]}", # Roots for forward reads
-        			filt = paste0("${pairId}", "_R1f.fastq.gz"),
+    	derepF <- derepFastq("${filtFor}")
+    	derepR <- derepFastq("${filtRev}")
 
-        			rev = "${reads[1]}", # Roots for reverse reads
-        			filt.rev = paste0("${pairId}", "_R2f.fastq.gz"),
-        	maxN = 0,
-        	maxEE = c(2,2),
-        	truncQ = 0, truncLen = 245,
-        	rm.phix=FALSE, multithread=TRUE,
-        	compress = T)
 
-        	write.csv(out, paste0("${pairId}", ".trimmed.txt"))
-        """
+        	saveRDS(derepF, "derepf.RDS")
+        	saveRDS(derepR, "derepr.RDS")
+        	"""
     }
 </code></pre></div></div>
 

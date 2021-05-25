@@ -129,8 +129,6 @@ a:active {
   height: 450px;
   padding-left: 10px;
   padding-right: 10px;
-
-
 }
 
 .multiqcbase{
@@ -176,4 +174,79 @@ hr {
   width: 10%;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.trimbase{
+  text-align: left;
+  position: relative;
+  margin-top: 1100px;
+  margin-bottom: 0px;
+}
+.trim{
+  position: absolute;
+  display: inline-block;
+  margin: 0px 0px 0px 110px;
+  right: 700px;
+  text-align: justify;
+  padding-right: 50px;
+  color: #d5ecc2;
+  font-size: 153.75%;
+  line-height: 50px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.trim p{
+  padding-right: 50px;
+}
+
+.trim h4{
+  color: #ffd3b4;
+  line-height: 0px;
+}
+
+.trim-code{
+  position: absolute;
+  text-align: justify;
+  display: inline-block;
+  margin-right: 100px;
+  right: 20px;
+  width: 620px;
+  height: 700px;
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+.derepbase{
+  text-align: left;
+  position: relative;
+  margin-top: 800px;
+}
+.derep{
+  position: absolute;
+  display: inline-block;
+  margin: 0px 100px 0px 0pc;
+  left: 700px;
+  text-align: justify;
+  padding-left: 40px;
+  color: #d5ecc2;
+  font-size: 153.75%;
+  line-height: 50px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.derep h4{
+  color: #ffd3b4;
+  line-height: 0px;
+}
+
+.derep-code{
+  position: absolute;
+  text-align: justify;
+  display: inline-block;
+  margin-left: 100px;
+  left: 20px;
+  height: 700px;
+  width: 580px;
+  padding-right: 30px;
+  padding-left: 10px;
 }
