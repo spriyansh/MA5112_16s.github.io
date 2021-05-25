@@ -49,7 +49,7 @@ body{
   line-height: 0px;
 }
 
-.dada{
+.dadadefine{
   color: #d5ecc2;
   text-align: justify;
   margin: auto 100px auto 100px;
@@ -139,7 +139,7 @@ a:active {
 .multiqc{
   position: absolute;
   display: inline-block;
-  margin: 0px 100px 0px 0pc;
+  margin: 0px 100px 0px 0px;
   left: 700px;
   text-align: justify;
   padding-left: 30px;
@@ -224,7 +224,7 @@ hr {
 .derep{
   position: absolute;
   display: inline-block;
-  margin: 0px 100px 0px 0pc;
+  margin: 0px 100px 0px 0px;
   left: 700px;
   text-align: justify;
   padding-left: 40px;
@@ -245,8 +245,123 @@ hr {
   display: inline-block;
   margin-left: 100px;
   left: 20px;
-  height: 700px;
+  height: 680px;
   width: 580px;
   padding-right: 30px;
   padding-left: 10px;
+}
+
+.errbase{
+  text-align: left;
+  position: relative;
+  margin-top: 800px;
+  margin-bottom: 0px;
+}
+.err{
+  position: absolute;
+  display: inline-block;
+  margin: 0px 0px 0px 110px;
+  right: 700px;
+  text-align: justify;
+  padding-right: 50px;
+  color: #d5ecc2;
+  font-size: 153.75%;
+  line-height: 50px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.err p{
+  padding-right: 50px;
+}
+
+.err h4{
+  color: #ffd3b4;
+  line-height: 0px;
+}
+
+.err-code{
+  position: absolute;
+  text-align: justify;
+  display: inline-block;
+  margin-right: 100px;
+  right: 20px;
+  width: 620px;
+  height: 700px;
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+.dadabase{
+  text-align: left;
+  position: relative;
+  margin-top: 875px;
+}
+.dada{
+  position: absolute;
+  display: inline-block;
+  margin: 0px 100px 0px 0px;
+  left: 700px;
+  text-align: justify;
+  padding-left: 40px;
+  color: #d5ecc2;
+  font-size: 153.75%;
+  line-height: 50px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.dada h4{
+  color: #ffd3b4;
+  line-height: 0px;
+}
+
+.dada-code{
+  position: absolute;
+  text-align: justify;
+  display: inline-block;
+  margin-left: 100px;
+  left: 20px;
+  height: 680px;
+  width: 580px;
+  padding-right: 30px;
+  padding-left: 10px;
+}
+
+.ASVbase{
+  text-align: left;
+  position: relative;
+  margin-top: 950px;
+  margin-bottom: 0px;
+}
+.ASV{
+  position: absolute;
+  display: inline-block;
+  margin: 0px 0px 0px 110px;
+  right: 700px;
+  text-align: justify;
+  padding-right: 50px;
+  color: #d5ecc2;
+  font-size: 153.75%;
+  line-height: 50px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.ASV p{
+  padding-right: 50px;
+}
+
+.ASV h4{
+  color: #ffd3b4;
+  line-height: 0px;
+}
+
+.ASV-code{
+  position: absolute;
+  text-align: justify;
+  display: inline-block;
+  margin-right: 100px;
+  right: 20px;
+  width: 620px;
+  height: 700px;
+  padding-left: 20px;
+  padding-right: 10px;
 }

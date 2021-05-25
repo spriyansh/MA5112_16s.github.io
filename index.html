@@ -18,7 +18,7 @@
         <h4><strong>16S Metagenomic Sequencing</strong></h4>
         <p>16S rRNA gene sequencing, or simply 16S sequencing, utilizes PCR to target and amplify portions of the hypervariable regions (V1-V9) of the bacterial 16S rRNA gene. Amplicons from separate samples are then given molecular barcodes, pooled together, and sequenced. After sequencing, raw data is analyzed with a bioinformatics pipeline which includes trimming, error correction, and comparison to a 16S reference database. After the reads are assigned to a phylogenetic rank, a taxonomy profile can be generated. Similarly, ITS sequencing follows the same strategy but targeting the ITS (Internal transcribed spacer) region found in fungal genomes <a href="https://www.zymoresearch.com/blogs/blog/16s-sequencing-vs-shotgun-metagenomic-sequencing">[1]</a>.</p>
       </div>
-      <div class="dada">
+      <div class="dadadefine">
 
       <h4><strong> Divisive Amplicon Denoising Algorithm (DADA)</strong></h4>
       <p>DADA2 is a method to infer the sample sequences in a collection of amplicon sequencing reads. DADA2 is a de novo method, and completely reference free. DADA2 does not create OTUs, it infers sample sequences exactly, resolving differences of as little as one nucleotide <a href="https://bioconductor.org/packages/devel/bioc/vignettes/dada2/inst/doc/dada2-intro.html">[2]</a>. DADA explicitly incorporates read abundance when deciding whether sequences are genuine or errors; if there are many identical reads of a sequence, DADA will be more likely to infer an underlying sample genotype, even if individually those reads would be consistent with being an error from a nearby genotype. Furthermore, DADA implicitly assumes, via the error model, that reads near highly abundant sequences are far more likely to be errors. In contrast, previous methods have typically treated each read independently. By using both sequence identity and abundance in this way, DADA is able to disentangle real diversity from errors at finer scales than previous methods, even when tuned to be very conservative <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-13-283">[3]</a>.</p>
@@ -125,36 +125,205 @@ process filterAndTrim {
 </div>
 <div class="derep-code">
   <pre class="code"><code class="language-R">
-    process Dereplication {
+process Dereplication {
 
-    	publishDir "output/Process_6_dereplication", mode: "link"
+  publishDir "output/Process_6_dereplication", mode: "link"
 
-    	label "Dereplication"
+  label "Dereplication"
 
-    	input:
-    	set val(pairId), file(filtFor), file(filtRev) from filteredReads
+  input:
+  set val(pairId), file(filtFor), file(filtRev) from filteredReads
 
-    	output:
-    	file "derepf.RDS" into derepFor
-    	file "derepr.RDS" into derepRev
-    	file "derepf.RDS" into derepFordada
-    	file "derepr.RDS" into derepRevdada
+  output:
+  file "derepf.RDS" into derepFor
+  file "derepr.RDS" into derepRev
+  file "derepf.RDS" into derepFordada
+  file "derepr.RDS" into derepRevdada
 
-    	script:
-    	"""
-    	#!/usr/bin/env Rscript
-    	library(dada2)
+  script:
+  """
+  #!/usr/bin/env Rscript
+  library(dada2)
 
+  derepF <- derepFastq("${filtFor}")
+  derepR <- derepFastq("${filtRev}")
 
-    	derepF <- derepFastq("${filtFor}")
-    	derepR <- derepFastq("${filtRev}")
-
-
-        	saveRDS(derepF, "derepf.RDS")
-        	saveRDS(derepR, "derepr.RDS")
-        	"""
-    }
+  saveRDS(derepF, "derepf.RDS")
+  saveRDS(derepR, "derepr.RDS")
+  """
+}
 </code></pre></div></div>
+
+<div class="errbase">
+<hr>
+<div class="err">
+  <h4>Error Model Estimation Process</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
+</div>
+<div class="err-code">
+  <pre class="code"><code class="language-R">
+process ErrModel{
+
+  publishDir "output/Process_7_errorModel", mode: "link"
+
+  label "ErrorEstimation"
+
+  input:
+  file (dFs) from derepFor
+  file (dRs) from derepRev
+
+  output:
+  file "errorsF.RDS" into errorsFor
+  file "errorsR.RDS" into errorsRev
+
+  script:
+  """
+  #!/usr/bin/env Rscript
+  library(dada2)
+
+  set.seed(100)
+
+  derepF <- readRDS("${dFs}")
+  derepR <- readRDS("${dRs}")
+
+  errMF <- dada(derepF, err=NULL, selfConsist = T)
+  errMR <- dada(derepR, err=NULL, selfConsist = T)
+
+  saveRDS(errMF, "errorsF.RDS")
+  saveRDS(errMR, "errorsR.RDS")
+  """
+}
+</code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="dadabase">
+  <hr>
+
+<div class="dada">
+  <h4>DADA Process</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
+</div>
+<div class="dada-code">
+  <pre class="code"><code class="language-R">
+process dada2{
+
+  publishDir "output/Process_8_dada", mode: "link"
+
+  label "dadaAlgo"
+
+  input:
+  file (errMF) from errorsFor
+  file (errMR) from errorsRev
+  file (dFs) from derepFordada
+  file (dRs) from derepRevdada
+
+  output:
+  file "merged.RDS" into mergedReads
+
+  script:
+  """
+  #!/usr/bin/env Rscript
+  library(dada2)
+
+  dF <- readRDS("${dFs}")
+  dR <- readRDS("${dRs}")
+
+  eMF <- readRDS("${errMF}")
+  eMR <- readRDS("${errMR}")
+
+  ddF <- dada(dF, err=eMF)
+  ddR <- dada(dR, err=eMR)
+
+  merger <- mergePairs(ddF, dF, ddR, dR, trimOverhang = TRUE)
+  saveRDS(merger, "merged.RDS")
+
+  """
+}
+</code></pre></div></div>
+
+<div class="ASVbase">
+<hr>
+<div class="ASV">
+  <h4>ASV Process</h4>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
+</div>
+<div class="ASV-code">
+  <pre class="code"><code class="language-R">
+process ASVnoChimera{
+
+  publishDir "output/Process_9_ASV", mode: "link"
+
+  label "ASVnoChimera"
+
+  input:
+  file (merged) from mergedReads
+
+  output:
+  file "ASV-Table.csv"
+  file "ASV.RDS"
+
+  script:
+  """
+  #!/usr/bin/env Rscript
+  library(dada2)
+
+  mergers <- readRDS("${merged}")
+
+  seqtab.all <- makeSequenceTable(mergers)
+
+  seqtab <- removeBimeraDenovo(seqtab.all)
+
+  write.csv(t(seqtab),"ASV-Table.csv")
+
+  saveRDS(seqtab, "ASV.RDS")
+
+  """
+}
+</code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script src="prism.js"></script>
     </body>
