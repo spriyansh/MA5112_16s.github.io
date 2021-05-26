@@ -2,43 +2,38 @@ body{
   background-color: #480032;
   text-align: center;
   margin: 0px
-  width: 100%;
 }
 
 .base{
   background-color: #005792;
-  width:100%;
+  margin: 0px;
 }
 
-#pageHeading{
+.header h1{
   font-family: 'Montserrat', sans-serif;
-  color: white;
-  margin: 0px auto 0px auto;
-  padding-top: 50px;
-  position: relative;
+  font-size: 70px;
+  padding-top: 75px;
   display: block;
-  font-size: 468.75%;
-  font-weight: normal;
+
 }
 
-#nf{
+.nf{
+  width: 800px;
+  height: 180px;
   display: block;
-  position: relative;
-  height: 90px;
-  width: 450px;
   margin: 0px auto 0px auto;
-  padding: 0px auto 0px auto;
 }
 
-#pageSubHeading{
-  margin: 0px auto 10px auto;
-  color: white;
-  font-family: 'Sacramento', cursive;
-  font-weight: normal;
-  font-size: 193.75%;
+.banner{
+  border-radius: 25px;
+  position: relative;
+  margin: 50px auto 20px auto;
+  width: 725px;
+  height: 400px;
+  right: 23px;
 }
+
 .introduction{
-
   text-align: justify;
   margin: 100px;
   font-size: 153.75%;
@@ -60,15 +55,6 @@ body{
 
 .dada h4{
   line-height: 0px;
-}
-
-#image1{
-  border-radius: 25px;
-  position: relative;
-  margin: 50px auto 20px auto;
-  width: 725px;
-  height: 400px;
-  right: 23px;
 }
 
 a:link {
