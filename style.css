@@ -1,25 +1,25 @@
 body{
-  background-color: #480032;
-  text-align: center;
-  margin: 0px
+    background: #480032 !important;
 }
 
-.base{
-  background-color: #005792;
-  margin: 0px;
+body{
+  text-align: center;
+  margin: 0px
+  padding: 0px;
 }
 
 .header h1{
   font-family: 'Montserrat', sans-serif;
   font-size: 70px;
+  color: white;
   padding-top: 75px;
   display: block;
 
 }
 
 .nf{
-  width: 800px;
-  height: 180px;
+  width: 600px;
+  height: 120px;
   display: block;
   margin: 0px auto 0px auto;
 }
@@ -34,27 +34,38 @@ body{
 }
 
 .introduction{
+  background-color: #f2f4c3;
+  margin: 0px;
+  padding: 0px;
+}
+
+.introduction p{
   text-align: justify;
-  margin: 100px;
   font-size: 153.75%;
   line-height: 50px;
   font-family: 'Montserrat', sans-serif;
+  padding-left: 100px;
+  padding-right: 100px;
+  margin-bottom: 0px;
+  margin-right: 0px;
 }
 
-.introduction h4{
-  line-height: 0px;
-}
 
 .dadadefine{
+  background-color: #f2f4c3;
+  margin: 0px;
+  padding: 0px;
+}
+
+.dadadefine p{
+  padding-top: 30px;
   text-align: justify;
-  margin: auto 100px auto 100px;
   font-size: 153.75%;
   line-height: 50px;
   font-family: 'Montserrat', sans-serif;
-}
-
-.dada h4{
-  line-height: 0px;
+  padding-left: 100px;
+  padding-right: 100px;
+  margin-bottom: 0px;
 }
 
 a:link {
@@ -81,11 +92,6 @@ a:active {
   text-decoration: underline;
 }
 
-/* .channel-base{
-  text-align: left;
-  /* position: relative;
-  height: 260px;
-} */
 .col-md-6 p{
     padding-left: 100px;
     margin-left: 0px;
@@ -100,6 +106,23 @@ a:active {
   margin-right: 100px;
 }
 
+.reverse-detail{
+  background-color: #f2f4c3;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
+}
+.col-md-6{
+  background-color: #f2f4c3;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+
+}
+
 .reverse-detail p{
   padding-right: 100px;
   padding-left: 0px;
@@ -107,6 +130,7 @@ a:active {
   font-family: 'Montserrat', sans-serif;
   font-size: 153.75%;
   text-align: left;
+  margin-bottom: 0px;
 }
 
 .reverse-code .code-toolbar{
