@@ -5,32 +5,56 @@
     <title>MA5112</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat&family=Sacramento&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="prism.css">
   </head>
   <body>
-    <div class="base">
+    <div class="conatiner base">
       <h1 id="pageHeading">16s rRNA Data Analysis using</h1>
       <img id="nf" src="nf.png" alt="nf">
       <img id="image1" src="microbes.jpg" alt="microbes"></div>
-      <div class="introduction">
+      <div class="conatiner introduction">
         <h4><strong>16S Metagenomic Sequencing</strong></h4>
         <p>16S rRNA gene sequencing, or simply 16S sequencing, utilizes PCR to target and amplify portions of the hypervariable regions (V1-V9) of the bacterial 16S rRNA gene. Amplicons from separate samples are then given molecular barcodes, pooled together, and sequenced. After sequencing, raw data is analyzed with a bioinformatics pipeline which includes trimming, error correction, and comparison to a 16S reference database. After the reads are assigned to a phylogenetic rank, a taxonomy profile can be generated. Similarly, ITS sequencing follows the same strategy but targeting the ITS (Internal transcribed spacer) region found in fungal genomes <a href="https://www.zymoresearch.com/blogs/blog/16s-sequencing-vs-shotgun-metagenomic-sequencing">[1]</a>.</p>
       </div>
-      <div class="dadadefine">
+      <div class="conatiner dadadefine">
 
       <h4><strong> Divisive Amplicon Denoising Algorithm (DADA)</strong></h4>
       <p>DADA2 is a method to infer the sample sequences in a collection of amplicon sequencing reads. DADA2 is a de novo method, and completely reference free. DADA2 does not create OTUs, it infers sample sequences exactly, resolving differences of as little as one nucleotide <a href="https://bioconductor.org/packages/devel/bioc/vignettes/dada2/inst/doc/dada2-intro.html">[2]</a>. DADA explicitly incorporates read abundance when deciding whether sequences are genuine or errors; if there are many identical reads of a sequence, DADA will be more likely to infer an underlying sample genotype, even if individually those reads would be consistent with being an error from a nearby genotype. Furthermore, DADA implicitly assumes, via the error model, that reads near highly abundant sequences are far more likely to be errors. In contrast, previous methods have typically treated each read independently. By using both sequence identity and abundance in this way, DADA is able to disentangle real diversity from errors at finer scales than previous methods, even when tuned to be very conservative <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-13-283">[3]</a>.</p>
       </div>
-      <hr>
-      <div class="channel-base">
-      <div class="channel">
-      <h4>Reading raw files</h4>
-      <p>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
-      </div>
-      <div class="channel-code">
-      <pre class="code"><code class="language-java">
+
+<!-- Reading Channel -->
+      <div class="row">
+        <div class="col-md-6 channel">
+          <p>
+            <strong>Reading raw files</strong>
+            <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
+          </p>
+        </div>
+        <div class="col-md-6">
+          <pre class="code">
+            <code class="language-java">
+#!/usr/bin/env nextflow
+
+params.reads = "path_to_folder/*_R[1,2].fastq.gz"
+
+Channel
+ .fromFilePairs(params.reads)
+ .ifEmpty { error "Cannot find any reads matching: ${params.reads}" }
+ .into {reads_ch; dada2ReadPairs}
+}
+            </code>
+          </pre>
+        </div>
+       </div>
+
+<!-- FastQC -->
+       <div class="row">
+         <div class="col-md-6 reverse-code">
+           <pre class="code">
+             <code class="language-java">
 #!/usr/bin/env nextflow
 
 params.reads = "path_to_folder/*_R[1,2].fastq.gz"
@@ -40,268 +64,316 @@ Channel
   .ifEmpty { error "Cannot find any reads matching: ${params.reads}" }
   .into {reads_ch; dada2ReadPairs}
 }
-  </code></pre></div></div>
-<hr>
-      <div class="fastqcbase">
-      <div class="fastqc">
+             </code>
+           </pre>
+         </div>
+         <div class="col-md-6 reverse-detail">
 
-        <h4>FastQC Process</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
-      </div>
-      <div class="fastqc-code">
-        <pre class="code"><code class="language-java">
-process FastQC {
+           <p>
+             <strong>FastQC Process</strong>
+             <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
+           </p>
+         </div>
+        </div>
 
-  publishDir "output/Process_1_fastqcBeforeTrim", mode: "link"
+        <!-- MultiQC -->
+              <div class="row">
+                <div class="col-md-6 channel">
+                  <p>
+                    <strong>MultiQC Process</strong>
+                    <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <pre class="code">
+                    <code class="language-java">
+                      process MultiQC {
 
-  label 'FastQC'
+                        publishDir "output/Process_2_multiqcBeforeTrim", mode: "link"
 
-  input:
-  set val(key), file(reads) from reads_ch
+                        label 'MultiQC'
 
-  output:
-  file "*_fastqc.{zip,html}" into fastqc_ch
+                        input:
+                        file("FastQC/*") from fastqc_ch.collect()
 
-  script:
-  """
-  fastqc -q $reads
-  """
-}
-</code></pre></div></div>
+                        output:
+                        file "multiqc_report.html" into multiqc_report
+                        file "multiqc_data"
 
-<div class="multiqcbase">
+                        script:
+                        """
+                        multiqc .
+                        """
+                      }
+                    </code>
+                  </pre>
+                </div>
+               </div>
 
-<div class="multiqc">
-  <h4>MultiQC Process</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
-</div>
-<div class="multiqc-code">
-  <pre class="code"><code class="language-java">
-process MultiQC {
 
-  publishDir "output/Process_2_multiqcBeforeTrim", mode: "link"
 
-  label 'MultiQC'
+               <!-- Filter and Trim -->
+                      <div class="row">
+                        <div class="col-md-6 reverse-code">
+                          <pre class="code">
+                            <code class="language-R">
+                              process filterAndTrim {
 
-  input:
-  file("FastQC/*") from fastqc_ch.collect()
+                                publishDir "output/Process_3_FilterAndTrim", mode: "link"
 
-  output:
-  file "multiqc_report.html" into multiqc_report
-  file "multiqc_data"
+                                input:
+                                set pairId, file(reads) from dada2ReadPairs
 
-  script:
-  """
-  multiqc .
-  """
-}
-</code></pre></div></div>
-<div class="trimbase">
-<hr>
-<div class="trim">
-  <h4>Filter and Trim Process</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
-</div>
-<div class="trim-code">
-  <pre class="code"><code class="language-R">
-process filterAndTrim {
+                                output:
+                                set val(pairId), "*_R1f.fastq.gz", "*_R2f.fastq.gz" into filteredReads
+                                file "*_R1f.fastq.gz" into forReads
+                                file "*_R2f.fastq.gz" into revReads
+                                file "*.trimmed.txt" into trimTracking
 
-  publishDir "output/Process_3_FilterAndTrim", mode: "link"
+                                script:
+                                """
+                                #!/usr/bin/env Rscript
+                                library(dada2)
 
-  input:
-  set pairId, file(reads) from dada2ReadPairs
+                                out <- filterAndTrim(fwd = "${reads[0]}",
+                                                filt = paste0("${pairId}", "_R1f.fastq.gz"),
+                                                rev = "${reads[1]}",
+                                                filt.rev = paste0("${pairId}", "_R2f.fastq.gz"),
+                                                maxN = 0, maxEE = c(2,2), truncQ = 0, truncLen = 245,
+                                                rm.phix=FALSE, multithread=TRUE, compress = T)
 
-  output:
-  set val(pairId), "*_R1f.fastq.gz", "*_R2f.fastq.gz" into filteredReads
-  file "*_R1f.fastq.gz" into forReads
-  file "*_R2f.fastq.gz" into revReads
-  file "*.trimmed.txt" into trimTracking
+                                write.csv(out, paste0("${pairId}", ".trimmed.txt"))
+                                """
+                              }
+                            </code>
+                          </pre>
+                        </div>
+                        <div class="col-md-6 reverse-detail">
 
-  script:
-  """
-  #!/usr/bin/env Rscript
-  library(dada2)
+                          <p>
+                            <strong>Filter & Trim Process</strong>
+                            <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
+                          </p>
+                        </div>
+                       </div>
 
-  out <- filterAndTrim(fwd = "${reads[0]}",
-                  filt = paste0("${pairId}", "_R1f.fastq.gz"),
-                  rev = "${reads[1]}",
-                  filt.rev = paste0("${pairId}", "_R2f.fastq.gz"),
-                  maxN = 0, maxEE = c(2,2), truncQ = 0, truncLen = 245,
-                  rm.phix=FALSE, multithread=TRUE, compress = T)
 
-  write.csv(out, paste0("${pairId}", ".trimmed.txt"))
-  """
-}
-</code></pre></div></div>
 
-<div class="derepbase">
-  <hr>
+                       <!-- Derep -->
+                             <div class="row">
+                               <div class="col-md-6 channel">
+                                 <p>
+                                   <strong>Dereplication Process</strong>
+                                   <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
+                                 </p>
+                               </div>
+                               <div class="col-md-6">
+                                 <pre class="code">
+                                   <code class="language-R">
+                                     process Dereplication {
 
-<div class="derep">
-  <h4>Dereplication Process</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
-</div>
-<div class="derep-code">
-  <pre class="code"><code class="language-R">
-process Dereplication {
+                                       publishDir "output/Process_6_dereplication", mode: "link"
 
-  publishDir "output/Process_6_dereplication", mode: "link"
+                                       label "Dereplication"
 
-  label "Dereplication"
+                                       input:
+                                       set val(pairId), file(filtFor), file(filtRev) from filteredReads
 
-  input:
-  set val(pairId), file(filtFor), file(filtRev) from filteredReads
+                                       output:
+                                       file "derepf.RDS" into derepFor
+                                       file "derepr.RDS" into derepRev
+                                       file "derepf.RDS" into derepFordada
+                                       file "derepr.RDS" into derepRevdada
 
-  output:
-  file "derepf.RDS" into derepFor
-  file "derepr.RDS" into derepRev
-  file "derepf.RDS" into derepFordada
-  file "derepr.RDS" into derepRevdada
+                                       script:
+                                       """
+                                       #!/usr/bin/env Rscript
+                                       library(dada2)
 
-  script:
-  """
-  #!/usr/bin/env Rscript
-  library(dada2)
+                                       derepF <- derepFastq("${filtFor}")
+                                       derepR <- derepFastq("${filtRev}")
 
-  derepF <- derepFastq("${filtFor}")
-  derepR <- derepFastq("${filtRev}")
+                                       saveRDS(derepF, "derepf.RDS")
+                                       saveRDS(derepR, "derepr.RDS")
+                                       """
+                                     }
+                                   </code>
+                                 </pre>
+                               </div>
+                              </div>
 
-  saveRDS(derepF, "derepf.RDS")
-  saveRDS(derepR, "derepr.RDS")
-  """
-}
-</code></pre></div></div>
 
-<div class="errbase">
-<hr>
-<div class="err">
-  <h4>Error Model Estimation Process</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
-</div>
-<div class="err-code">
-  <pre class="code"><code class="language-R">
-process ErrModel{
+                              <!-- Error Model -->
+                                     <div class="row">
+                                       <div class="col-md-6 reverse-code">
+                                         <pre class="code">
+                                           <code class="language-R">
+                                             process ErrModel{
 
-  publishDir "output/Process_7_errorModel", mode: "link"
+                                               publishDir "output/Process_7_errorModel", mode: "link"
 
-  label "ErrorEstimation"
+                                               label "ErrorEstimation"
 
-  input:
-  file (dFs) from derepFor
-  file (dRs) from derepRev
+                                               input:
+                                               file (dFs) from derepFor
+                                               file (dRs) from derepRev
 
-  output:
-  file "errorsF.RDS" into errorsFor
-  file "errorsR.RDS" into errorsRev
+                                               output:
+                                               file "errorsF.RDS" into errorsFor
+                                               file "errorsR.RDS" into errorsRev
 
-  script:
-  """
-  #!/usr/bin/env Rscript
-  library(dada2)
+                                               script:
+                                               """
+                                               #!/usr/bin/env Rscript
+                                               library(dada2)
 
-  set.seed(100)
+                                               set.seed(100)
 
-  derepF <- readRDS("${dFs}")
-  derepR <- readRDS("${dRs}")
+                                               derepF <- readRDS("${dFs}")
+                                               derepR <- readRDS("${dRs}")
 
-  errMF <- dada(derepF, err=NULL, selfConsist = T)
-  errMR <- dada(derepR, err=NULL, selfConsist = T)
+                                               errMF <- dada(derepF, err=NULL, selfConsist = T)
+                                               errMR <- dada(derepR, err=NULL, selfConsist = T)
 
-  saveRDS(errMF, "errorsF.RDS")
-  saveRDS(errMR, "errorsR.RDS")
-  """
-}
-</code></pre></div></div>
+                                               saveRDS(errMF, "errorsF.RDS")
+                                               saveRDS(errMR, "errorsR.RDS")
+                                               """
+                                             }
+                                           </code>
+                                         </pre>
+                                       </div>
+                                       <div class="col-md-6 reverse-detail">
 
-<div class="dadabase">
-  <hr>
+                                         <p>
+                                           <strong>Error Estimation Process</strong>
+                                           <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
+                                         </p>
+                                       </div>
+                                      </div>
 
-<div class="dada">
-  <h4>DADA Process</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
-</div>
-<div class="dada-code">
-  <pre class="code"><code class="language-R">
-process dada2{
 
-  publishDir "output/Process_8_dada", mode: "link"
 
-  label "dadaAlgo"
+                                      <!-- DADA -->
+                                            <div class="row">
+                                              <div class="col-md-6 channel">
+                                                <p>
+                                                  <strong>DADA Process</strong>
+                                                  <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
+                                                </p>
+                                              </div>
+                                              <div class="col-md-6">
+                                                <pre class="code">
+                                                  <code class="language-R">
+                                                    process dada2{
 
-  input:
-  file (errMF) from errorsFor
-  file (errMR) from errorsRev
-  file (dFs) from derepFordada
-  file (dRs) from derepRevdada
+                                                      publishDir "output/Process_8_dada", mode: "link"
 
-  output:
-  file "merged.RDS" into mergedReads
+                                                      label "dadaAlgo"
 
-  script:
-  """
-  #!/usr/bin/env Rscript
-  library(dada2)
+                                                      input:
+                                                      file (errMF) from errorsFor
+                                                      file (errMR) from errorsRev
+                                                      file (dFs) from derepFordada
+                                                      file (dRs) from derepRevdada
 
-  dF <- readRDS("${dFs}")
-  dR <- readRDS("${dRs}")
+                                                      output:
+                                                      file "merged.RDS" into mergedReads
 
-  eMF <- readRDS("${errMF}")
-  eMR <- readRDS("${errMR}")
+                                                      script:
+                                                      """
+                                                      #!/usr/bin/env Rscript
+                                                      library(dada2)
 
-  ddF <- dada(dF, err=eMF)
-  ddR <- dada(dR, err=eMR)
+                                                      dF <- readRDS("${dFs}")
+                                                      dR <- readRDS("${dRs}")
 
-  merger <- mergePairs(ddF, dF, ddR, dR, trimOverhang = TRUE)
-  saveRDS(merger, "merged.RDS")
+                                                      eMF <- readRDS("${errMF}")
+                                                      eMR <- readRDS("${errMR}")
 
-  """
-}
-</code></pre></div></div>
+                                                      ddF <- dada(dF, err=eMF)
+                                                      ddR <- dada(dR, err=eMR)
 
-<div class="ASVbase">
-<hr>
-<div class="ASV">
-  <h4>ASV Process</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem</p>
-</div>
-<div class="ASV-code">
-  <pre class="code"><code class="language-R">
-process ASVnoChimera{
+                                                      merger <- mergePairs(ddF, dF, ddR, dR, trimOverhang = TRUE)
+                                                      saveRDS(merger, "merged.RDS")
 
-  publishDir "output/Process_9_ASV", mode: "link"
+                                                      """
+                                                    }
+                                                  </code>
+                                                </pre>
+                                              </div>
+                                             </div>
 
-  label "ASVnoChimera"
 
-  input:
-  file (merged) from mergedReads
 
-  output:
-  file "ASV-Table.csv"
-  file "ASV.RDS"
 
-  script:
-  """
-  #!/usr/bin/env Rscript
-  library(dada2)
 
-  mergers <- readRDS("${merged}")
 
-  seqtab.all <- makeSequenceTable(mergers)
+                                             <!-- ASV No CHimera -->
+                                                    <div class="row">
+                                                      <div class="col-md-6 reverse-code">
+                                                        <pre class="code">
+                                                          <code class="language-R">
+                                                            process ASVnoChimera{
 
-  seqtab <- removeBimeraDenovo(seqtab.all)
+                                                              publishDir "output/Process_9_ASV", mode: "link"
 
-  write.csv(t(seqtab),"ASV-Table.csv")
+                                                              label "ASVnoChimera"
 
-  saveRDS(seqtab, "ASV.RDS")
+                                                              input:
+                                                              file (merged) from mergedReads
 
-  """
-}
-</code></pre></div></div>
+                                                              output:
+                                                              file "ASV-Table.csv"
+                                                              file "ASV.RDS"
+
+                                                              script:
+                                                              """
+                                                              #!/usr/bin/env Rscript
+                                                              library(dada2)
+
+                                                              mergers <- readRDS("${merged}")
+
+                                                              seqtab.all <- makeSequenceTable(mergers)
+
+                                                              seqtab <- removeBimeraDenovo(seqtab.all)
+
+                                                              write.csv(t(seqtab),"ASV-Table.csv")
+
+                                                              saveRDS(seqtab, "ASV.RDS")
+
+                                                              """
+                                                            }
+                                                          </code>
+                                                        </pre>
+                                                      </div>
+                                                      <div class="col-md-6 reverse-detail">
+
+                                                        <p>
+                                                          <strong>ASV Process</strong>
+                                                          <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
+                                                        </p>
+                                                      </div>
+                                                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="footer">
-  <p>Ben Nolan ● Breena McCorrmek ● Nial Garvy ● Priyansh Srivastava</p>
+  <p>Ben Nolan ● Breena McCormack ● Niall Garvey ● Priyansh Srivastava</p>
 
-</div>
+</div> 
 
     <script src="prism.js"></script>
     </body>
