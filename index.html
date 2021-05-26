@@ -20,20 +20,30 @@
     <img class="image-fluid banner" src="microbes.jpg" alt="microbes">
   </div>
   <div class="row">
-  <div class="col-md-12 introduction">
-    <p><strong>16S Metagenomic Sequencing</strong><br>16S rRNA gene sequencing, or simply 16S sequencing, utilizes PCR to target and amplify portions of the hypervariable regions (V1-V9) of the bacterial 16S rRNA gene. Amplicons from separate samples are then given molecular barcodes, pooled
-      together, and sequenced. After sequencing, raw data is analyzed with a bioinformatics pipeline which includes trimming, error correction, and comparison to a 16S reference database. After the reads are assigned to a phylogenetic rank, a
-      taxonomy profile can be generated. Similarly, ITS sequencing follows the same strategy but targeting the ITS (Internal transcribed spacer) region found in fungal genomes <a
-        href="https://www.zymoresearch.com/blogs/blog/16s-sequencing-vs-shotgun-metagenomic-sequencing">[1]</a>.</p>
-  </div></div>
+    <div class="col-md-12 introduction">
+      <p><strong>16S Metagenomic Sequencing</strong><br>16S rRNA gene sequencing, or simply 16S sequencing, utilizes PCR to target and amplify portions of the hypervariable regions (V1-V9) of the bacterial 16S rRNA gene. Amplicons from separate
+        samples are then given molecular barcodes, pooled
+        together, and sequenced. After sequencing, raw data is analyzed with a bioinformatics pipeline which includes trimming, error correction, and comparison to a 16S reference database. After the reads are assigned to a phylogenetic rank, a
+        taxonomy profile can be generated. Similarly, ITS sequencing follows the same strategy but targeting the ITS (Internal transcribed spacer) region found in fungal genomes <a
+          href="https://www.zymoresearch.com/blogs/blog/16s-sequencing-vs-shotgun-metagenomic-sequencing">[1]</a>.</p>
+    </div>
+  </div>
+  <div class="divider div-transparent div-dot"></div>
+  </div>
   <div class="row">
-  <div class="col-md-12 dadadefine">
-    <p><strong> Divisive Amplicon Denoising Algorithm (DADA)</strong>DADA2 is a method to infer the sample sequences in a collection of amplicon sequencing reads. DADA2 is a de novo method, and completely reference free. DADA2 does not create OTUs, it infers sample sequences exactly, resolving differences of as
-      little as one nucleotide <a href="https://bioconductor.org/packages/devel/bioc/vignettes/dada2/inst/doc/dada2-intro.html">[2]</a>. DADA explicitly incorporates read abundance when deciding whether sequences are genuine or errors; if there are
-      many identical reads of a sequence, DADA will be more likely to infer an underlying sample genotype, even if individually those reads would be consistent with being an error from a nearby genotype. Furthermore, DADA implicitly assumes, via the
-      error model, that reads near highly abundant sequences are far more likely to be errors. In contrast, previous methods have typically treated each read independently. By using both sequence identity and abundance in this way, DADA is able to
-      disentangle real diversity from errors at finer scales than previous methods, even when tuned to be very conservative <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-13-283">[3]</a>.</p>
-  </div></div>
+    <div class="col-md-12 dadadefine">
+      <p><strong> Divisive Amplicon Denoising Algorithm (DADA)</strong><br>DADA2 is a method to infer the sample sequences in a collection of amplicon sequencing reads. DADA2 is a de novo method, and completely reference free. DADA2 does not create
+        OTUs,
+        it infers sample sequences exactly, resolving differences of as
+        little as one nucleotide <a href="https://bioconductor.org/packages/devel/bioc/vignettes/dada2/inst/doc/dada2-intro.html">[2]</a>. DADA explicitly incorporates read abundance when deciding whether sequences are genuine or errors; if there are
+        many identical reads of a sequence, DADA will be more likely to infer an underlying sample genotype, even if individually those reads would be consistent with being an error from a nearby genotype. Furthermore, DADA implicitly assumes, via
+        the
+        error model, that reads near highly abundant sequences are far more likely to be errors. In contrast, previous methods have typically treated each read independently. By using both sequence identity and abundance in this way, DADA is able to
+        disentangle real diversity from errors at finer scales than previous methods, even when tuned to be very conservative <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-13-283">[3]</a>.</p>
+    </div>
+  </div>
+  <div class="divider div-transparent div-dot"></div>
+  </div>
 
   <!-- Reading Channel -->
   <div class="row">
@@ -59,7 +69,8 @@ Channel
           </pre>
     </div>
   </div>
-
+  <div class="divider div-transparent div-dot"></div>
+  </div>
   <!-- FastQC -->
   <div class="row">
     <div class="col-md-6 reverse-code">
@@ -84,6 +95,8 @@ Channel
         <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
       </p>
     </div>
+  </div>
+  <div class="divider div-transparent div-dot"></div>
   </div>
 
   <!-- MultiQC -->
@@ -120,7 +133,8 @@ Channel
     </div>
   </div>
 
-
+  <div class="divider div-transparent div-dot"></div>
+  </div>
 
   <!-- Filter and Trim -->
   <div class="row">
@@ -168,7 +182,8 @@ Channel
   </div>
 
 
-
+  <div class="divider div-transparent div-dot"></div>
+  </div>
   <!-- Derep -->
   <div class="row">
     <div class="col-md-6 channel">
@@ -211,7 +226,8 @@ Channel
                                  </pre>
     </div>
   </div>
-
+  <div class="divider div-transparent div-dot"></div>
+  </div>
 
   <!-- Error Model -->
   <div class="row">
@@ -262,7 +278,8 @@ Channel
   </div>
 
 
-
+  <div class="divider div-transparent div-dot"></div>
+  </div>
   <!-- DADA -->
   <div class="row">
     <div class="col-md-6 channel">
@@ -315,7 +332,8 @@ Channel
 
 
 
-
+  <div class="divider div-transparent div-dot"></div>
+  </div>
 
 
   <!-- ASV No CHimera -->
@@ -358,21 +376,13 @@ Channel
     </div>
     <div class="col-md-6 reverse-detail">
 
-      <p>
+      <p class="last">
         <strong>ASV Process</strong>
         <br>Lorem ipsum dolor sit amet, sociis natoque. Felis donec et odio pellentesque. Pellentesque elit eget gravida cum sociis natoque. Felis donec et odio pellentesque. Eget arcu dictum varius duis at consectetur lorem
       </p>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
+  <div class="divider div-transparent div-stopper"></div>
 
   <div class="footer">
     <p>Ben Nolan ● Breena McCormack ● Niall Garvey ● Priyansh Srivastava</p>
